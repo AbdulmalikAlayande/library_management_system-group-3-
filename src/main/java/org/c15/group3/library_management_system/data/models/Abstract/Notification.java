@@ -9,10 +9,6 @@ import org.c15.group3.library_management_system.data.models.notifications.Sender
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.UUID;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
 @Setter
 @ToString
