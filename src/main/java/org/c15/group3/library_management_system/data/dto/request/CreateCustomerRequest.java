@@ -13,6 +13,7 @@ public record CreateCustomerRequest(
 		@NotBlank
 		String email,
 		String phoneNumber,
+		String countryCode,
 		String password
 ) {
 
