@@ -1,4 +1,4 @@
-package org.c15.group3.library_management_system.services.validators;
+package org.c15.group3.library_management_system.services.notifications.mail;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
