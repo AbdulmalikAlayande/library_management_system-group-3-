@@ -15,7 +15,7 @@ public class JWTUtil {
 		if (email != null)
 		    tokenCreator = buildTokenForEmails(email, password);
 		else tokenCreator = buildTokenForTextMessages(phoneNumber, password);
-		return tokenCreator.sign(Algorithm.HMAC512(email+password));
+		return tokenCreator.sign(Algorithm.HMAC512(password));
 	}
 	
 	private static JWTCreator.Builder buildTokenForTextMessages(String phoneNumber, String password) {
@@ -38,6 +38,24 @@ public class JWTUtil {
 				  .withIssuedAt(Instant.now());
 	}
 	
+	public static boolean isValidToken(String token, String notificationMedium, String secret) {
+		if (Objects.equals(notificationMedium, "mail")) {
+			JWTVerifier verifier = JWT.require(Algorithm.HMAC512(secret))
+					                       .withIssuer("Library Management Incorporation")
+					                       .withClaimPresence("user mail")
+					                       .build();
+			return verifier.verify(token)!=null;
+		}
+		if (Objects.equals(notificationMedium, "text message")) {
+			JWTVerifier verifier = JWT.require(Algorithm.HMAC512(secret))
+					                       .withIssuer("Library Management Incorporation")
+					                       .withClaimPresence("user phone number")
+					                       .build();
+			return verifier.verify(token)!=null;
+		}
+		else return false;
+	}
+	
 	public static String generateAccountActivationUrl(String email, String password, String phoneNumber){
 		String baseUrl = "https://localhost/3000/library_management/activate-account";
 		String queryStringPrefix = "?";
@@ -46,21 +64,11 @@ public class JWTUtil {
 		return baseUrl+queryStringPrefix+queryStringToken+generatedToken;
 	}
 	
-	public static boolean isValidToken(String token, String notificationMedium) {
-		if (Objects.equals(notificationMedium, "mail")) {
-			JWTVerifier verifier = JWT.require(Algorithm.HMAC512("secret"))
-					                       .withIssuer("Library Management Incorporation")
-					                       .withClaimPresence("user mail")
-					                       .build();
-			return verifier.verify(token)!=null;
-		}
-		if (Objects.equals(notificationMedium, "text message")) {
-			JWTVerifier verifier = JWT.require(Algorithm.HMAC512("secret"))
-					                       .withIssuer("Library Management Incorporation")
-					                       .withClaimPresence("user phone number")
-					                       .build();
-			return verifier.verify(token)!=null;
-		}
-		else return false;
+	public static String extractEmailFrom(String token) {
+		return null;
+	}
+	
+	public static String extractPhoneNumberFrom(String token) {
+		return null;
 	}
 }

@@ -26,17 +26,28 @@ public class AppUtilTest {
 	}
 	
 	@Test void generatedTokenCanBeDecodedAsAValidJWTToken(){
-		String token = JWTUtil.generateAccountActivationToken(null, "ayanniyi@20", "+2347036174617");
-		assertThat(JWTUtil.isValidToken(token, "email")).isTrue();
+		String password = "ayanniyi@20";
+		String phoneNumber = "+2347036174617";
+		String token = JWTUtil.generateAccountActivationToken(null, password, phoneNumber);
+		assertThat(JWTUtil.isValidToken(token, "text message", password)).isTrue();
 	}
 	
 	@Test void testThatEmailCanBeExtractedFromToken(){
-		
+		String password = "ayanniyi@20";
+		String phoneNumber = "+2347036174617";
+		String token = JWTUtil.generateAccountActivationToken(null, password, phoneNumber);
+		String email = JWTUtil.extractEmailFrom(token);
 	}
 	
 	@Test void testThatPasswordCanBeExtractedFromToken(){
-	
+		String password = "ayanniyi@20";
+		String phoneNumber = "+2347036174617";
+		String token = JWTUtil.generateAccountActivationToken(null, password, phoneNumber);
+		String extractedPhoneNumber = JWTUtil.extractPhoneNumberFrom(token);
+		assertThat(extractedPhoneNumber).isEqualTo(phoneNumber);
 	}
 	
+	@Test void testThatFullPayloadCanBeExtractedFromToken(){
 	
+	}
 }
