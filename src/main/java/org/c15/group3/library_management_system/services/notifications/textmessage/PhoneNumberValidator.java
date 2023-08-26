@@ -21,22 +21,28 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, Ob
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		Phone phone = (Phone) value;
-			if (phone.getPhoneNumber().charAt(0) == '+'){
-					try {
-						Phonenumber.PhoneNumber parsedNumber = phoneNumberUtil.parse(phone.getPhoneNumber(), null);
-						System.out.println("hi");
-						System.out.println("Country code is:: " + parsedNumber.getCountryCode());
-						System.out.println("extension is:: " + parsedNumber.getExtension());
-						System.out.println("National number is:: " + parsedNumber.getNationalNumber());
-						System.out.println(parsedNumber.clear());
-						System.out.println("Clear country code:: " + parsedNumber.clearCountryCode());
-						System.out.println("Clear country code source:: " + parsedNumber.clearCountryCodeSource());
-						return phoneNumberUtil.isValidNumber(parsedNumber);
-					} catch (Exception e) {
-						return false; // Invalid format or region code
-					}
-			}
-		return false;
+		return isValid(phone);
 	}
 	
+	public boolean isValid(Phone phone){
+		if (phone.getPhoneNumber().charAt(0) == '+'){
+			try {
+				Phonenumber.PhoneNumber parsedNumber = phoneNumberUtil.parse(phone.getPhoneNumber(), null);
+				System.out.println(phoneNumberUtil.isValidNumber(parsedNumber));
+				System.out.println(phoneNumberUtil.getExampleNumber("NG"));
+				System.out.println(phoneNumberUtil.getNumberType(parsedNumber));
+				System.out.println("hi");
+				System.out.println("Country code is:: " + parsedNumber.getCountryCode());
+				System.out.println("extension is:: " + parsedNumber.getExtension());
+				System.out.println("National number is:: " + parsedNumber.getNationalNumber());
+				System.out.println(parsedNumber.clear());
+				System.out.println("Clear country code:: " + parsedNumber.clearCountryCode());
+				System.out.println("Clear country code source:: " + parsedNumber.clearCountryCodeSource());
+				return phoneNumberUtil.isValidNumber(parsedNumber);
+			} catch (Exception e) {
+				return false; // Invalid format or region code
+			}
+		}
+		return false;
+	}
 }

@@ -24,7 +24,6 @@ public class Book {
     private String  id;
     private Long isbn;
     private String title;
-    @Enumerated(value = EnumType.STRING)
     private Genre genre;
     private LocalDateTime dateAddedToLibrary;
     @Transient

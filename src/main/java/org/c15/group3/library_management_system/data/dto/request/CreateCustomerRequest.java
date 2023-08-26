@@ -8,7 +8,6 @@ import org.c15.group3.library_management_system.data.models.annotations.ValidDom
 
 @Getter
 @Setter
-@Builder
 @ToString
 @RequiredArgsConstructor
 public class CreateCustomerRequest {

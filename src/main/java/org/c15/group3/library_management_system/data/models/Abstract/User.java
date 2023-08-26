@@ -20,6 +20,5 @@ public abstract class User {
     private String id;
     @OneToOne
     private UserBioData userBioData;
-    @Enumerated(value = EnumType.STRING)
     private Role role;
 }
