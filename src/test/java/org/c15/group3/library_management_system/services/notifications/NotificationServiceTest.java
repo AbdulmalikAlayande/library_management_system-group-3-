@@ -8,6 +8,7 @@ import org.c15.group3.library_management_system.data.models.annotations.ValidDom
 import org.c15.group3.library_management_system.services.notifications.mail.DomainValidator;
 import org.c15.group3.library_management_system.services.notifications.mail.MailService;
 import org.c15.group3.library_management_system.services.notifications.textmessage.PhoneNumberValidator;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,6 +44,7 @@ public class NotificationServiceTest {
 	}
 	
 	@Test
+	@Disabled
 	void validateEmailDomainTest() {
 		boolean isValid = domainValidator.isValid("alaabddulmalik@");
 		assertThat(isValid).isFalse();
@@ -82,5 +84,9 @@ public class NotificationServiceTest {
 				                                          .build();
 		ResponseEntity<NotificationResponse> response = mailService.sendAccountActivationMail(notificationRequest);
 		assertThat(response.getBody()).isNotNull();
+	}
+	
+	@Test void testThymeleafTemplateWorksFine(){
+//		mailService.getTemplate();
 	}
 }

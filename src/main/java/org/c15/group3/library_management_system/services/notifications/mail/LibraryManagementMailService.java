@@ -19,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.TemplateEngine;
 
@@ -38,6 +39,7 @@ public class LibraryManagementMailService implements MailService{
 	private final TemplateEngine templateEngine;
 	private ModelMapper modelMapper;
 	private AppConfig appConfig;
+	private Model model;
 	
 	@Override
 	public ResponseEntity<NotificationResponse> sendAccountActivationMail(NotificationRequest notificationRequest) throws RequestInvalidException {
@@ -66,5 +68,13 @@ public class LibraryManagementMailService implements MailService{
 			log.info("{} response body:: {}", MESSAGE_SUCCESSFULLY_SENT, Objects.requireNonNull(response.getBody()));
 		else log.error("{} response body:: {}", MESSAGE_FAILED_TO_SEND, Objects.requireNonNull(response.getBody()));
 		return response;
+	}
+	
+	@Override
+	public String getTemplate(Model model) {
+		model.addAllAttributes(Collections.singletonMap("name", "bola"));
+		model.addAllAttributes(Collections.singletonMap("name", "bola"));
+		model.addAllAttributes(Collections.singletonMap("name", "bola"));
+		return "account_activation_mail_template";
 	}
 }

@@ -40,4 +40,9 @@ public class AppConfig {
 		return new ModelMapper();
 	}
 	
+	@Bean
+	public AppConfig getAppConfig(){
+		return new AppConfig();
+	}
+	
 }
