@@ -1,6 +1,7 @@
 package org.c15.group3.library_management_system.data.models.annotations;
 
 import jakarta.validation.Constraint;
+import org.c15.group3.library_management_system.services.validators.DomainValidator;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.lang.annotation.Documented;
