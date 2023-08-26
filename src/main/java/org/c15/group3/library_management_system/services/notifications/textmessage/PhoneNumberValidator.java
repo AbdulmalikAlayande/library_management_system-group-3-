@@ -38,6 +38,7 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, Ob
 				System.out.println(parsedNumber.clear());
 				System.out.println("Clear country code:: " + parsedNumber.clearCountryCode());
 				System.out.println("Clear country code source:: " + parsedNumber.clearCountryCodeSource());
+				System.out.println("is possible number:: "+phoneNumberUtil.isPossibleNumber(parsedNumber));
 				return phoneNumberUtil.isValidNumber(parsedNumber);
 			} catch (Exception e) {
 				return false; // Invalid format or region code
