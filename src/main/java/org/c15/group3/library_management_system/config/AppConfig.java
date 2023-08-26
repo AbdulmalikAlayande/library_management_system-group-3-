@@ -24,6 +24,8 @@ public class AppConfig {
 	private String cloudApiName;
 	@Value("${cloud.api.secret}")
 	private String cloudApiSecret;
+	@Value("${jwt.util.secret}")
+	private String jwtSecret;
 	
 	@Bean
 	public PhoneNumberUtil getPhoneNumberUtil(){
