@@ -21,8 +21,13 @@ public abstract class Notification{
     private String id;
     private String message;
     @Transient
+    @JsonProperty("sender")
     private Sender sender;
     @OneToMany
     @JsonProperty("to")
     private List<Recipient> recipients;
+    @JsonProperty("htmlContent")
+    private String htmlContent;
+    @JsonProperty(value = "subject")
+    private String subject;
 }

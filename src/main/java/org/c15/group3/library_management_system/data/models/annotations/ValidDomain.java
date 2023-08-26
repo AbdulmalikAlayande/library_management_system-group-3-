@@ -18,5 +18,5 @@ import static java.lang.annotation.ElementType.*;
 @ComponentScan
 public @interface ValidDomain {
 	
-	String[] domains() default {};
+	String[] domains() default {"gmail.com", "outlook.com", "yahoo.com", "hotmail.com"};
 }

@@ -20,4 +20,9 @@ public class Recipient{
     @Id
     @GeneratedValue(strategy = UUID)
     private String id;
+    private String username;
+    private String email;
+    private String phoneNumber;
+    private String firstName;
+    private String lastName;
 }

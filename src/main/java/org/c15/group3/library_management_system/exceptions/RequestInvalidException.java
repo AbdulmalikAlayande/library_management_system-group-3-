@@ -5,4 +5,8 @@ public class RequestInvalidException extends Exception{
 	public RequestInvalidException(String message){
 		super(message);
 	}
+	
+	public RequestInvalidException(String message, Throwable throwable){
+		super(message, throwable);
+	}
 }

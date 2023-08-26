@@ -1,5 +1,6 @@
 package org.c15.group3.library_management_system.services.notifications.textmessage;
 
+import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import jakarta.validation.ConstraintValidator;
@@ -7,6 +8,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;
 import org.c15.group3.library_management_system.data.dto.request.Phone;
 import org.c15.group3.library_management_system.data.models.annotations.PhoneNumber;
+import org.c15.group3.library_management_system.exceptions.RequestInvalidException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,27 +23,27 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, Ob
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		Phone phone = (Phone) value;
-		return isValid(phone);
+		try {
+			if (phone.getRegionCode() != null)
+				return isValidForRegion(phone);
+			return isValid(phone);
+		} catch (RequestInvalidException | NumberParseException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public boolean isValid(Phone phone){
+	public boolean isValidForRegion(Phone phone) throws NumberParseException {
+		Phonenumber.PhoneNumber parsedNumber = phoneNumberUtil.parse(phone.getPhoneNumber(), phone.getRegionCode());
+		return phoneNumberUtil.isValidNumberForRegion(parsedNumber, phone.getRegionCode());
+	}
+	
+	public boolean isValid(Phone phone) throws RequestInvalidException {
 		if (phone.getPhoneNumber().charAt(0) == '+'){
 			try {
 				Phonenumber.PhoneNumber parsedNumber = phoneNumberUtil.parse(phone.getPhoneNumber(), null);
-				System.out.println(phoneNumberUtil.isValidNumber(parsedNumber));
-				System.out.println(phoneNumberUtil.getExampleNumber("NG"));
-				System.out.println(phoneNumberUtil.getNumberType(parsedNumber));
-				System.out.println("hi");
-				System.out.println("Country code is:: " + parsedNumber.getCountryCode());
-				System.out.println("extension is:: " + parsedNumber.getExtension());
-				System.out.println("National number is:: " + parsedNumber.getNationalNumber());
-				System.out.println(parsedNumber.clear());
-				System.out.println("Clear country code:: " + parsedNumber.clearCountryCode());
-				System.out.println("Clear country code source:: " + parsedNumber.clearCountryCodeSource());
-				System.out.println("is possible number:: "+phoneNumberUtil.isPossibleNumber(parsedNumber));
 				return phoneNumberUtil.isValidNumber(parsedNumber);
 			} catch (Exception e) {
-				return false; // Invalid format or region code
+				throw new RequestInvalidException(e.getMessage());
 			}
 		}
 		return false;
