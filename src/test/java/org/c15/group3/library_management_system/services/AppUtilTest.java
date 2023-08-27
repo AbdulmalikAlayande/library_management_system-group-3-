@@ -20,7 +20,7 @@ public class AppUtilTest {
 	}
 	
 	@Test void testThatAccountActivationTokenIsContainsBaseUrl(){
-		String token = JWTUtil.generateAccountActivationUrl(null, "ayanniyi@20", "+2347036174617");
+		String token = JWTUtil.generateAccountActivationUrl(null, "ayanniyi@20", "+2347036174617").toString();
 		System.out.println("token:: "+token);
 		assertThat(token).contains("https://localhost:3000/library_management");
 	}
@@ -50,6 +50,10 @@ public class AppUtilTest {
 	}
 	
 	@Test void testThatFullPayloadCanBeExtractedFromToken(){
-	
+		String password = "ayanniyi@20";
+		String phoneNumber = "+2347036174617";
+		String token = JWTUtil.generateAccountActivationToken(null, password, phoneNumber);
+		String extractedPassword = JWTUtil.extractPasswordFromToken(token);
+		assertThat(extractedPassword).isEqualTo(password);
 	}
 }
