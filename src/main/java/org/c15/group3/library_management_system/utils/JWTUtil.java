@@ -7,6 +7,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class JWTUtil {
@@ -20,20 +22,22 @@ public class JWTUtil {
 	}
 	
 	private static JWTCreator.Builder buildTokenForTextMessages(String phoneNumber, String password) {
+		Map<String, String> claims = new HashMap<>();
+		claims.put("user password", password);
+		claims.put("user phone number", phoneNumber);
 		return JWT.create()
-				  .withClaim("user phone number", phoneNumber)
-				  .withClaim("user password", password)
-//				  .withHeader("text message token")
+				  .withClaim("claims", claims)
 				  .withIssuer("Library Management Incorporation")
 				  .withExpiresAt(Instant.now().plusSeconds(7200))
 				  .withIssuedAt(Instant.now());
 	}
 	
 	private static JWTCreator.Builder buildTokenForEmails(String email, String password) {
+		Map<String, String> claims = new HashMap<>();
+		claims.put("user password", password);
+		claims.put("user mail", email);
 		return JWT.create()
-				  .withClaim("user mail", email)
-				  .withClaim("user password", password)
-//				  .withHeader("mail message token")
+				  .withClaim("claims",claims)
 				  .withExpiresAt(Instant.now().plusSeconds(3600))
 				  .withIssuer("Library Management Incorporation")
 				  .withIssuedAt(Instant.now());
@@ -43,14 +47,14 @@ public class JWTUtil {
 		if (Objects.equals(notificationMedium, "mail")) {
 			JWTVerifier verifier = JWT.require(Algorithm.HMAC512(secret))
 					                       .withIssuer("Library Management Incorporation")
-					                       .withClaimPresence("user mail")
+					                       .withClaimPresence("claims")
 					                       .build();
 			return verifier.verify(token)!=null;
 		}
 		if (Objects.equals(notificationMedium, "text message")) {
 			JWTVerifier verifier = JWT.require(Algorithm.HMAC512(secret))
 					                       .withIssuer("Library Management Incorporation")
-					                       .withClaimPresence("user phone number")
+					                       .withClaimPresence("claims")
 					                       .build();
 			return verifier.verify(token)!=null;
 		}
@@ -66,15 +70,23 @@ public class JWTUtil {
 	}
 	
 	public static String extractEmailFrom(String token) {
-		Claim claim = JWT.decode(token).getClaim("user mail");
-		System.out.println("claim is:: "+claim);
-		
+		Claim claim = JWT.decode(token).getClaim("claims");
+		if (claim.isMissing() || claim.isNull())
+			return "claim is null or missing";
 		return claim.asMap().get("user mail").toString();
 	}
 	
 	public static String extractPhoneNumberFrom(String token) {
-		Claim claim = JWT.decode(token).getClaim("user phone number");
-		System.out.println("claim is:: "+claim);
+		Claim claim = JWT.decode(token).getClaim("claims");
+		if (claim.isMissing() || claim.isNull())
+			return "claim is null or missing";
 		return claim.asMap().get("user phone number").toString();
+	}
+	
+	public static String extractPasswordFromToken(String token){
+		Claim claim = JWT.decode(token).getClaim("claims");
+		if (claim.isMissing() || claim.isNull())
+			return "claim is null or missing";
+		return claim.asMap().get("user password").toString();
 	}
 }

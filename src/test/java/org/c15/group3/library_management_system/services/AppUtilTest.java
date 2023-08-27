@@ -41,7 +41,7 @@ public class AppUtilTest {
 		assertThat(extractedEmail).isEqualTo(email);
 	}
 	
-	@Test void testThatPasswordCanBeExtractedFromToken(){
+	@Test void testThatPhoneNumberCanBeExtractedFromToken(){
 		String password = "ayanniyi@20";
 		String phoneNumber = "+2347036174617";
 		String token = JWTUtil.generateAccountActivationToken(null, password, phoneNumber);
