@@ -3,11 +3,13 @@ package org.c15.group3.library_management_system.services.users;
 import lombok.SneakyThrows;
 import org.c15.group3.library_management_system.data.dto.request.CreateCustomerRequest;
 import org.c15.group3.library_management_system.data.dto.response.CreateCustomerResponse;
+import org.c15.group3.library_management_system.exceptions.RegistrationFailedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -26,7 +28,11 @@ class CustomerServiceTest {
 	
 	@Test
 	void testThatCustomerEntersInInvalidDetails_RegistrationFailedExceptionIsThrown() {
-		customerResponse = customerService.registerCustomer(buildCustomerWithInvalidDetails());
+		
+		assertThatThrownBy(()-> customerService.registerCustomer(buildCustomerWithInvalidDetails()))
+				.isExactlyInstanceOf(RegistrationFailedException.class)
+				.hasMessage("")
+				.hasMessageContaining("");
 	}
 	
 	private CreateCustomerRequest buildCustomerWithInvalidDetails() {

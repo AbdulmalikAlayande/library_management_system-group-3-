@@ -1,6 +1,7 @@
 package org.c15.group3.library_management_system.data.models.annotations;
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import org.c15.group3.library_management_system.services.validators.DomainValidator;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -19,4 +20,7 @@ import static java.lang.annotation.ElementType.*;
 public @interface ValidDomain {
 	
 	String[] domains() default {"gmail.com", "outlook.com", "yahoo.com", "hotmail.com"};
+	String message() default "Invalid domain";
+	Class<?>[] groups() default {};
+	Class<? extends Payload>[] payload() default {};
 }

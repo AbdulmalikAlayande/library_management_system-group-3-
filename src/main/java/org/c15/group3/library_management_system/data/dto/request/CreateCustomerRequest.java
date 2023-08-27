@@ -1,5 +1,6 @@
 package org.c15.group3.library_management_system.data.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -17,6 +18,7 @@ public class CreateCustomerRequest {
 	@NotBlank
 	private String firstname;
 	private String lastname;
+	@Valid
 	@Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
 	@ValidDomain(domains = {"gmail.com", "yahoo.com", "outlook.com", "semicolon.africa.com", "hotmail.com", "hotmail.co.uk", "freenet.de"})
 	@NotBlank

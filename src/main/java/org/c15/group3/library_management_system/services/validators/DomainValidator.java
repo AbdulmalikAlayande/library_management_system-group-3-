@@ -3,6 +3,7 @@ package org.c15.group3.library_management_system.services.validators;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.ConstraintValidatorContext.*;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.c15.group3.library_management_system.data.models.annotations.ValidDomain;
 import org.c15.group3.library_management_system.exceptions.RequestInvalidException;
@@ -16,6 +17,7 @@ import static org.c15.group3.library_management_system.utils.Constants.CONSTRAIN
 
 @ComponentScan
 @Service
+@Getter
 public class DomainValidator implements ConstraintValidator<ValidDomain, String> {
 
 	private String[] domains;
@@ -23,6 +25,7 @@ public class DomainValidator implements ConstraintValidator<ValidDomain, String>
 	@Override
 	public void initialize(ValidDomain constraintAnnotation) {
 		domains = constraintAnnotation.domains();
+		
 	}
 	
 	@Override
