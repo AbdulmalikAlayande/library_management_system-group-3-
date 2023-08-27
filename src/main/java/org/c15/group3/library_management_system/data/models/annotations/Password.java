@@ -1,5 +1,19 @@
 package org.c15.group3.library_management_system.data.models.annotations;
 
+import jakarta.validation.Constraint;
+import org.c15.group3.library_management_system.services.validators.PasswordValidator;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Constraint(validatedBy = PasswordValidator.class)
+@Target(value = {FIELD, PARAMETER, ANNOTATION_TYPE})
+@Retention(value = RUNTIME)
 public @interface Password {
 	
 	String regexp() default "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&.!*?]).{8,12}$";

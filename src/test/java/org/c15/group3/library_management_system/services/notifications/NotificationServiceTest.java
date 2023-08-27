@@ -5,9 +5,9 @@ import org.c15.group3.library_management_system.data.dto.request.NotificationReq
 import org.c15.group3.library_management_system.data.dto.request.Phone;
 import org.c15.group3.library_management_system.data.dto.response.NotificationResponse;
 import org.c15.group3.library_management_system.data.models.annotations.ValidDomain;
-import org.c15.group3.library_management_system.services.notifications.mail.DomainValidator;
+import org.c15.group3.library_management_system.services.validators.DomainValidator;
 import org.c15.group3.library_management_system.services.notifications.mail.MailService;
-import org.c15.group3.library_management_system.services.notifications.textmessage.PhoneNumberValidator;
+import org.c15.group3.library_management_system.services.validators.PhoneNumberValidator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

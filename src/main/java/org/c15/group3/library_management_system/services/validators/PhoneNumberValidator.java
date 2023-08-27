@@ -1,4 +1,4 @@
-package org.c15.group3.library_management_system.services.notifications.textmessage;
+package org.c15.group3.library_management_system.services.validators;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;

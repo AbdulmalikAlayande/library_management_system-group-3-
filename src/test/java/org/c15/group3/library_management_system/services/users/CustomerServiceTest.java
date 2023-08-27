@@ -34,7 +34,7 @@ class CustomerServiceTest {
 				       .email("alaabdulgmail.com")
 				       .firstname("Abdulmalik")
 				       .lastname("Alayande")
-				       .password("")
+				       .password("Ayanniyi@20")
 				       .build();
 	}
 	
