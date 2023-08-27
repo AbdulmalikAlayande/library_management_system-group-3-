@@ -18,7 +18,7 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = UUID)
     private String id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UserBioData userBioData;
     private Role role;
 }

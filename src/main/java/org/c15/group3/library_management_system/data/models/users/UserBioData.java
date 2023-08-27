@@ -1,6 +1,7 @@
 package org.c15.group3.library_management_system.data.models.users;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @AllArgsConstructor
@@ -17,7 +18,11 @@ public class UserBioData {
     private String id;
     private String firstName;
     private String LastName;
+    @Column(unique = true)
     private String email;
-    @OneToOne
+    @Column(nullable = false)
+    @NotBlank
+    private String password;
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 }

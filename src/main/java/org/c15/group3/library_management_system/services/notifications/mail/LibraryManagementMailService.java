@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 import static org.c15.group3.library_management_system.utils.Constants.*;
+import static org.c15.group3.library_management_system.utils.JWTUtil.generateAccountActivationUrl;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +40,6 @@ public class LibraryManagementMailService implements MailService{
 	private final TemplateEngine templateEngine;
 	private ModelMapper modelMapper;
 	private AppConfig appConfig;
-	private Model model;
 	
 	@Override
 	public ResponseEntity<NotificationResponse> sendAccountActivationMail(NotificationRequest notificationRequest) throws RequestInvalidException {
@@ -71,10 +71,10 @@ public class LibraryManagementMailService implements MailService{
 	}
 	
 	@Override
-	public String getTemplate(Model model) {
-		model.addAllAttributes(Collections.singletonMap("name", "bola"));
-		model.addAllAttributes(Collections.singletonMap("name", "bola"));
-		model.addAllAttributes(Collections.singletonMap("name", "bola"));
+	public String getTemplate(Model model, NotificationRequest notificationRequest) {
+		model.addAttribute("Username", notificationRequest.getFirstName()+notificationRequest.getLastName());
+		model.addAttribute("activationLink",
+				generateAccountActivationUrl(notificationRequest.getEmail(), notificationRequest.getPassword(), notificationRequest.getPhoneNumber()));
 		return "account_activation_mail_template";
 	}
 }
