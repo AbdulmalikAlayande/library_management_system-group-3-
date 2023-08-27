@@ -1,6 +1,7 @@
 package org.c15.group3.library_management_system.data.models.annotations;
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import org.c15.group3.library_management_system.services.validators.PasswordValidator;
 
 import java.lang.annotation.Documented;
@@ -17,4 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface Password {
 	
 	String regexp() default "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$&.!*?]).{8,12}$";
+	String message() default "Invalid password";
+	Class<?>[] groups() default {};
+	Class<? extends Payload>[] payload() default {};
 }

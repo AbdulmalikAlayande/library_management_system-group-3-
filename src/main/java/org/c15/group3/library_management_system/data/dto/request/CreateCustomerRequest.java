@@ -18,16 +18,17 @@ public class CreateCustomerRequest {
 	@NotBlank
 	private String firstname;
 	private String lastname;
-	@Valid
 	@Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
 	@ValidDomain(domains = {"gmail.com", "yahoo.com", "outlook.com", "semicolon.africa.com", "hotmail.com", "hotmail.co.uk", "freenet.de"})
 	@NotBlank
+	@Valid
 	private String email;
-	
 	private String regionCode;
 	@PhoneNumber
+	@Valid
 	private Phone phoneNumber;
 	@Password
+	@Valid
 	private String password;
 
 }
