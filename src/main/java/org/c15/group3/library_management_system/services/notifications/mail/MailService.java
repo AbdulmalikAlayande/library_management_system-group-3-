@@ -10,5 +10,4 @@ import org.springframework.ui.Model;
 public interface MailService {
 	
 	ResponseEntity<NotificationResponse> sendAccountActivationMail(NotificationRequest notificationRequest) throws RequestInvalidException;
-	String getTemplate(Model model, NotificationRequest notificationRequest);
 }

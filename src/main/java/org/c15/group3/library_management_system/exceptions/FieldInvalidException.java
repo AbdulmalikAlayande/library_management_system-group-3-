@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class FieldInvalidException extends Exception{
 	
-	private String cause;
+	private String exceptionCause;
 	private String[] reasons;
 	
 	public FieldInvalidException(String message) {

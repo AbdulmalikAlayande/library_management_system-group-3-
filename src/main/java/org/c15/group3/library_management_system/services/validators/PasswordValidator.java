@@ -2,13 +2,16 @@ package org.c15.group3.library_management_system.services.validators;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.c15.group3.library_management_system.data.models.annotations.Password;
 import org.c15.group3.library_management_system.exceptions.FieldInvalidException;
+import org.springframework.stereotype.Service;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Service
+@Getter
 public class PasswordValidator implements ConstraintValidator<Password, String> {
 	
 	private String regExpression;
@@ -20,11 +23,11 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
 	
 	@SneakyThrows
 	@Override
-	public boolean isValid(String phoneNumber, ConstraintValidatorContext context) {
+	public boolean isValid(String password, ConstraintValidatorContext context) {
 		Pattern compiledPattern = Pattern.compile(regExpression);
-		if (!compiledPattern.matcher(phoneNumber).matches()) {
+		if (!compiledPattern.matcher(password).matches()) {
 			FieldInvalidException fieldInvalidException = new FieldInvalidException("Invalid Password");
-			fieldInvalidException.setCause("Password does not obey stated contract for password");
+			fieldInvalidException.setExceptionCause("Password does not obey stated contract for password");
 			fieldInvalidException.setReasons(new String[]{
 					"Password must be between 8-12 characters long",
 					"Password must contain at least one uppercase letter and one digit",
@@ -33,5 +36,9 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
 			throw fieldInvalidException;
 		}
 		return true;
+	}
+	
+	public boolean isValid(String password) {
+		return isValid(password, null);
 	}
 }

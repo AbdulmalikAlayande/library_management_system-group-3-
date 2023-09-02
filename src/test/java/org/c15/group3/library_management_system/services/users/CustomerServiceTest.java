@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import org.c15.group3.library_management_system.data.dto.request.CreateCustomerRequest;
 import org.c15.group3.library_management_system.data.dto.response.CreateCustomerResponse;
 import org.c15.group3.library_management_system.exceptions.RegistrationFailedException;
+import org.c15.group3.library_management_system.exceptions.RequestInvalidException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +24,18 @@ class CustomerServiceTest {
 	@BeforeEach
 	void startEachTestWith() {
 		customerResponse = customerService.registerCustomer(customerRequest);
-		
 	}
 	
 	@Test
 	void testThatCustomerEntersInInvalidDetails_RegistrationFailedExceptionIsThrown() {
-		
 		assertThatThrownBy(()-> customerService.registerCustomer(buildCustomerWithInvalidDetails()))
-				.isExactlyInstanceOf(RegistrationFailedException.class)
-				.hasMessage("")
-				.hasMessageContaining("");
+				.isExactlyInstanceOf(RequestInvalidException.class)
+				.hasMessageContaining("Invalid domain");
 	}
 	
 	private CreateCustomerRequest buildCustomerWithInvalidDetails() {
 		return CreateCustomerRequest.builder()
-				       .email("alaabdulgmail.com")
+				       .email("alaabdul")
 				       .firstname("Abdulmalik")
 				       .lastname("Alayande")
 				       .password("Ayanniyi@20")

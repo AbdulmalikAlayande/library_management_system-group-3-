@@ -69,12 +69,4 @@ public class LibraryManagementMailService implements MailService{
 		else log.error("{} response body:: {}", MESSAGE_FAILED_TO_SEND, Objects.requireNonNull(response.getBody()));
 		return response;
 	}
-	
-	@Override
-	public String getTemplate(Model model, NotificationRequest notificationRequest) {
-		model.addAttribute("Username", notificationRequest.getFirstName()+notificationRequest.getLastName());
-		model.addAttribute("activationLink",
-				generateAccountActivationUrl(notificationRequest.getEmail(), notificationRequest.getPassword(), notificationRequest.getPhoneNumber()));
-		return "account_activation_mail_template";
-	}
 }
